@@ -1,4 +1,4 @@
-package resource;
+package resources;
 
 import dao.DoadorDAO;
 import entities.Doador;

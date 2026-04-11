@@ -1,4 +1,4 @@
-package resource;
+package resources;
 import dao.DentistaDAO;
 import entities.Dentista;
 import jakarta.ws.rs.*;

@@ -1,4 +1,4 @@
-package resource;
+package resources;
 import dao.BeneficiarioDAO;
 import entities.Beneficiario;
 import jakarta.ws.rs.*;

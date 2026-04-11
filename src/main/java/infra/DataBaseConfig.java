@@ -5,12 +5,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DataBaseConfig {
-    private static final String URL = loadUrlFromProperties("database.properties", "db.url");
-    private static final String USER = loadUrlFromProperties("database.properties", "db.user");
-    private static final String PASSWORD = loadUrlFromProperties("database.properties", "db.password");
-     public static Connection getConnection() throws SQLException {
-         return DriverManager.getConnection(URL, USER, PASSWORD);
-     }
+    private static final String URL = loadUrlFromProperties("database.properties", "url");
+    private static final String USER = loadUrlFromProperties("database.properties", "user");
+    private static final String PASSWORD = loadUrlFromProperties("database.properties", "password");
+
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
+    }
     public static void Initialize() {
         var sql = """
                 CREATE TABLE BENEFICIARIO (
@@ -51,11 +52,17 @@ public class DataBaseConfig {
     }
 
     private static String loadUrlFromProperties(String fileName, String key) {
-        try (var input = DataBaseConfig.class.getClassLoader()
-                .getResourceAsStream(fileName)) {
+        try {
+            var input = DataBaseConfig.class
+                    .getClassLoader()
+                    .getResourceAsStream(fileName);
+
+            System.out.println("INPUT: " + input); // 👈 TESTE
+
             var props = new java.util.Properties();
             props.load(input);
             return props.getProperty(key);
+
         } catch (Exception e) {
             throw new RuntimeException("Falha ao carregar database.properties", e);
         }

@@ -1,4 +1,4 @@
-package resource;
+package resources;
 import dao.ConsultaDAO;
 import entities.Consulta;
 import jakarta.ws.rs.*;
