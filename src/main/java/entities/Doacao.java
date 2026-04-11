@@ -7,8 +7,6 @@ public class Doacao {
     private Doador doador;
     public LocalDate dataDoacao;
 
-
-
     public Doacao(BigDecimal valorDoacao, Doador doador,  LocalDate dataDoacao) {
         this.valorDoacao = valorDoacao;
         this.doador = doador;
