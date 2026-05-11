@@ -4,6 +4,9 @@ import dao.ConsultaDAO;
 import entities.Beneficiario;
 import entities.Consulta;
 import entities.Dentista;
+import enums.Prioridade;
+import enums.StatusAgendamento;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -111,7 +114,7 @@ public class Main {
                             Long idConsulta = sc.nextLong();
                             sc.nextLine();
 
-                            Consulta c = new Consulta(encontrado, d, dataHora);
+                            Consulta c = new Consulta(encontrado, d, dataHora, Prioridade.MEDIA, StatusAgendamento.PENDENTE );
                             c.setId(idConsulta);
 
                             consultaDAO.inserir(c);

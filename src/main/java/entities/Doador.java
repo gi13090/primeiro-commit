@@ -5,11 +5,12 @@ import java.time.LocalDate;
 public class Doador extends Pessoa {
     private LocalDate data;
     private BigDecimal valorDoado;
+    private Contato contato;
 
-    public Doador(Long id, String nome, String endereco, String email, String telefone,
-                  LocalDate data, BigDecimal valorDoado) {
+    public Doador(Long id, String nome, String endereco, String email,
+                  Contato contato, LocalDate data, BigDecimal valorDoado) {
 
-        super(id, nome, endereco, email, new Contato(telefone, "", ""));
+        super(id, nome, endereco, email, contato);
         this.data = data;
         this.valorDoado = valorDoado;
     }

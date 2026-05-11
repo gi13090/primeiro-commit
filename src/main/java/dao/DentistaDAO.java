@@ -52,6 +52,33 @@ public class DentistaDAO {
         return lista;
     }
 
+    public Dentista buscarPorId(Long id) {
+        String sql = "SELECT * FROM DENTISTA WHERE id = ?";
+
+        try (Connection conn = DataBaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Dentista(
+                        rs.getLong("id"),
+                        rs.getString("nome"),
+                        rs.getString("endereco"),
+                        rs.getString("email"),
+                        rs.getString("telefone"),
+                        rs.getString("cro")
+                );
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar dentista", e);
+        }
+
+        return null;
+    }
+
     public void deletar(Long id) {
 
         String sql = "DELETE FROM dentista WHERE id = ?";

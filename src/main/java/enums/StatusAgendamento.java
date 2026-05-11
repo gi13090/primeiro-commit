@@ -3,7 +3,8 @@ package enums;
 public enum StatusAgendamento {
     AGENDADO ("Agendamento realizado"),
     CANCELADO ("Consulta cancelada"),
-    REALIZADO ("Consulta realizada");
+    PENDENTE ("Agendamento pendente"),
+    REALIZADO ("Consulta realizada"),;
     private String descricao;
 
     StatusAgendamento(String descricao) {

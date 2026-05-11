@@ -9,6 +9,19 @@ public class Pessoa {
     private Boolean ativo;
 
     public Pessoa(Long id, String nome, String endereco, String email, Contato contato) {
+
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("Nome é obrigatório");
+        }
+
+        if (email == null || !email.contains("@")) {
+            throw new IllegalArgumentException("Email inválido");
+        }
+
+        if (contato == null) {
+            throw new IllegalArgumentException("Contato é obrigatório");
+        }
+
         this.id = id;
         this.nome = nome;
         this.endereco = endereco;
@@ -25,11 +38,35 @@ public class Pessoa {
     public Boolean getAtivo() { return ativo; }
 
     public void setId(Long id) { this.id = id; }
-    public void setNome(String nome) { this.nome = nome; }
-    public void setEndereco(String endereco) { this.endereco = endereco; }
-    public void setEmail(String email) { this.email = email; }
-    public void setContato(Contato contato) { this.contato = contato; }
-    public void setAtivo(Boolean ativo) { this.ativo = ativo; }
+
+    public void setNome(String nome) {
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("Nome inválido");
+        }
+        this.nome = nome;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public void setEmail(String email) {
+        if (email == null || !email.contains("@")) {
+            throw new IllegalArgumentException("Email inválido");
+        }
+        this.email = email;
+    }
+
+    public void setContato(Contato contato) {
+        if (contato == null) {
+            throw new IllegalArgumentException("Contato inválido");
+        }
+        this.contato = contato;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
 
     @Override
     public String toString() {

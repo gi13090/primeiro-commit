@@ -6,6 +6,11 @@ public class Contato {
     private String telefoneFixo;
 
     public Contato(String telefone, String prefixo, String telefoneFixo) {
+
+        if (telefone == null || telefone.isBlank()) {
+            throw new IllegalArgumentException("Telefone é obrigatório");
+        }
+
         this.telefone = telefone;
         this.prefixo = prefixo;
         this.telefoneFixo = telefoneFixo;
@@ -24,6 +29,9 @@ public class Contato {
     }
 
     public void setTelefone(String telefone) {
+        if (telefone == null || telefone.isBlank()) {
+            throw new IllegalArgumentException("Telefone inválido");
+        }
         this.telefone = telefone;
     }
 

@@ -54,6 +54,33 @@ public class BeneficiarioDAO {
 
         return lista;
     }
+    public Beneficiario buscarPorId(Long id) {
+        String sql = "SELECT * FROM BENEFICIARIO WHERE id = ?";
+
+        try (Connection conn = DataBaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Beneficiario(
+                        rs.getLong("id"),
+                        rs.getString("nome"),
+                        rs.getString("cpf"),
+                        rs.getString("telefone"),
+                        rs.getString("email"),
+                        rs.getString("endereco")
+                );
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar beneficiário", e);
+        }
+
+        return null;
+    }
+
     public void atualizar(Beneficiario b) {
 
         String sql = "UPDATE beneficiario SET nome=?, cpf=?, telefone=?, email=?, endereco=? WHERE id=?";

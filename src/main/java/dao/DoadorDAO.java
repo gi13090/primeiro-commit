@@ -1,4 +1,6 @@
 package dao;
+
+import entities.Contato;
 import entities.Doador;
 import infra.DataBaseConfig;
 import java.sql.*;
@@ -27,6 +29,7 @@ public class DoadorDAO {
             throw new RuntimeException("Erro ao inserir doador", e);
         }
     }
+
     public List<Doador> listar() {
         List<Doador> lista = new ArrayList<>();
         String sql = "SELECT * FROM doador";
@@ -36,25 +39,63 @@ public class DoadorDAO {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
+
+                Contato contato = new Contato(
+                        rs.getString("contato"),
+                        "",
+                        ""
+                );
                 Doador d = new Doador(
                         rs.getLong("id"),
                         rs.getString("nome"),
                         rs.getString("endereco"),
                         rs.getString("email"),
-                        rs.getString("contato"),
+                        contato,
                         rs.getDate("data_doacao").toLocalDate(),
                         rs.getBigDecimal("valor_doado")
                 );
-
                 lista.add(d);
             }
+
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao listar doadores", e);
         }
         return lista;
     }
-    public void atualizar(Doador d) {
+    public Doador buscarPorId(Long id) {
 
+        String sql = "SELECT * FROM doador WHERE id = ?";
+
+        try (Connection conn = DataBaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Contato contato = new Contato(
+                        rs.getString("contato"),
+                        "",
+                        ""
+                );
+                return new Doador(
+                        rs.getLong("id"),
+                        rs.getString("nome"),
+                        rs.getString("endereco"),
+                        rs.getString("email"),
+                        contato,
+                        rs.getDate("data_doacao").toLocalDate(),
+                        rs.getBigDecimal("valor_doado")
+                );
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar doador", e);
+        }
+
+        return null;
+    }
+
+    public void atualizar(Doador d) {
         String sql = "UPDATE doador SET nome=?, endereco=?, email=?, contato=?, data_doacao=?, valor_doado=? WHERE id=?";
 
         try (Connection conn = DataBaseConfig.getConnection();

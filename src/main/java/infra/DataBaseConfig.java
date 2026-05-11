@@ -3,8 +3,12 @@ package infra;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class DataBaseConfig {
+
+    private static final Logger logger = Logger.getLogger(DataBaseConfig.class.getName());
+
     private static final String URL = loadUrlFromProperties("database.properties", "url");
     private static final String USER = loadUrlFromProperties("database.properties", "user");
     private static final String PASSWORD = loadUrlFromProperties("database.properties", "password");
@@ -12,6 +16,7 @@ public class DataBaseConfig {
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
+
     public static void Initialize() {
         var sql = """
                 CREATE TABLE BENEFICIARIO (
@@ -35,15 +40,16 @@ public class DataBaseConfig {
                 );
                 CREATE TABLE DOADOR (
                     ID_PESSOA NUMBER NOT NULL,
-                    TIPO_DOADOR VARCHAR2(20) NOT NULL,
+                    TIPO_DOADOR VARCHAR2(20) NOT NULL
                 );
                 """;
+
         try (var conn = getConnection()) {
             var stmt = conn.prepareStatement(sql);
             stmt.execute();
         } catch (SQLException e) {
-            if (e.getErrorCode() == 955) { // ORA-00955: name is already used by an existing object
-                System.out.println("Tabela já existente, ignorando criação.");
+            if (e.getErrorCode() == 955) {
+                logger.info("Tabela já existente, ignorando criação.");
             } else {
                 e.printStackTrace();
                 throw new RuntimeException("Erro ao inicializar banco de dados", e);
@@ -56,8 +62,6 @@ public class DataBaseConfig {
             var input = DataBaseConfig.class
                     .getClassLoader()
                     .getResourceAsStream(fileName);
-
-            System.out.println("INPUT: " + input); // 👈 TESTE
 
             var props = new java.util.Properties();
             props.load(input);
