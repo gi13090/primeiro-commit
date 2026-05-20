@@ -16,10 +16,8 @@ public class ConsultaDAO {
     private final BeneficiarioDAO beneficiarioDAO = new BeneficiarioDAO();
     private final DentistaDAO dentistaDAO = new DentistaDAO();
 
-    // CREATE
     public void inserir(Consulta consulta) {
-        String sql = "INSERT INTO CONSULTA (id, id_beneficiario, id_dentista, data_hora) VALUES (?, ?, ?, ?)";
-
+        String sql = "INSERT INTO CONSULTA (id, beneficiario_id, dentista_id, data_hora) VALUES (?, ?, ?, ?)";
         try (Connection conn = DataBaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -45,8 +43,8 @@ public class ConsultaDAO {
 
             while (rs.next()) {
 
-                Long idBeneficiario = rs.getLong("id_beneficiario");
-                Long idDentista = rs.getLong("id_dentista");
+                Long idBeneficiario = rs.getLong("beneficiario_id");
+                Long idDentista = rs.getLong("dentista_id");
 
                 Beneficiario b = beneficiarioDAO.buscarPorId(idBeneficiario);
                 Dentista d = dentistaDAO.buscarPorId(idDentista);
@@ -108,8 +106,8 @@ public class ConsultaDAO {
     }
 
     public void atualizar(Consulta consulta) {
-        String sql = "UPDATE CONSULTA SET id_beneficiario = ?, id_dentista = ?, data_hora = ? WHERE id = ?";
-
+        String sql = "UPDATE CONSULTA SET beneficiario_id = ?, dentista_id = ?, data_hora = ? WHERE id = ?";
+        
         try (Connection conn = DataBaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 

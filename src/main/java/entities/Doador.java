@@ -7,6 +7,9 @@ public class Doador extends Pessoa {
     private BigDecimal valorDoado;
     private Contato contato;
 
+    public Doador() {
+    }
+
     public Doador(Long id, String nome, String endereco, String email,
                   Contato contato, LocalDate data, BigDecimal valorDoado) {
 

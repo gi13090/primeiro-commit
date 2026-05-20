@@ -3,6 +3,9 @@ package entities;
 public class Beneficiario extends Pessoa {
     private String cpf;
 
+    public Beneficiario() {
+
+    }
     public Beneficiario(Long id, String nome, String cpf, String telefone, String email, String endereco) {
         super(id, nome, endereco, email, new Contato(telefone, "", ""));
 

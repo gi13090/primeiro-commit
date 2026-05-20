@@ -5,6 +5,10 @@ public class Contato {
     private String prefixo;
     private String telefoneFixo;
 
+    public Contato() {
+
+    }
+
     public Contato(String telefone, String prefixo, String telefoneFixo) {
 
         if (telefone == null || telefone.isBlank()) {

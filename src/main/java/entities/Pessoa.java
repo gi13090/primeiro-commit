@@ -30,6 +30,9 @@ public class Pessoa {
         this.ativo = true;
     }
 
+    public Pessoa() {
+    }
+
     public Long getId() { return id; }
     public String getNome() { return nome; }
     public String getEndereco() { return endereco; }

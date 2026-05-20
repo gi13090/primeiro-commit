@@ -14,9 +14,15 @@ import java.util.List;
 public class BeneficiarioResource {
     private BeneficiarioDAO dao = new BeneficiarioDAO();
 
+
     @POST
     public Response inserir(Beneficiario b) {
         try {
+            if (b == null || b.getNome() == null) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("Dados inválidos: Nome é obrigatório.")
+                        .build();
+            }
             dao.inserir(b);
             return Response.status(Response.Status.CREATED)
                     .entity(b)
