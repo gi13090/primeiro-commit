@@ -40,7 +40,7 @@ public class BeneficiarioDAO {
                         rs.getLong("id"),
                         rs.getString("nome"),
                         rs.getString("cpf"),
-                        rs.getString("telefone"),
+                        rs.getString("contato"),
                         rs.getString("email"),
                         rs.getString("endereco")
                 );
@@ -68,7 +68,7 @@ public class BeneficiarioDAO {
                         rs.getLong("id"),
                         rs.getString("nome"),
                         rs.getString("cpf"),
-                        rs.getString("telefone"),
+                        rs.getString("contato"),
                         rs.getString("email"),
                         rs.getString("endereco")
                 );
@@ -83,7 +83,7 @@ public class BeneficiarioDAO {
 
     public void atualizar(Beneficiario b) {
 
-        String sql = "UPDATE beneficiario SET nome=?, cpf=?, telefone=?, email=?, endereco=? WHERE id=?";
+        String sql = "UPDATE beneficiario SET nome=?, cpf=?, contato=?, email=?, endereco=? WHERE id=?";
 
         try (Connection conn = DataBaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

@@ -12,76 +12,103 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class BeneficiarioResource {
-    private BeneficiarioDAO dao = new BeneficiarioDAO();
 
+    private BeneficiarioDAO dao = new BeneficiarioDAO();
 
     @POST
     public Response inserir(Beneficiario b) {
+
         try {
+
             if (b == null || b.getNome() == null) {
+
                 return Response.status(Response.Status.BAD_REQUEST)
                         .entity("Dados inválidos: Nome é obrigatório.")
                         .build();
             }
+
             dao.inserir(b);
+
             return Response.status(Response.Status.CREATED)
                     .entity(b)
                     .build();
 
         } catch (IllegalArgumentException e) {
+
+            e.printStackTrace();
+
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(e.getMessage())
                     .build();
 
         } catch (Exception e) {
+
+            e.printStackTrace();
+
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Erro ao inserir beneficiário")
+                    .entity(e.getMessage())
                     .build();
         }
     }
+
     @GET
     public List<Beneficiario> listar() {
         return dao.listar();
     }
+
     @GET
     @Path("/{id}")
     public Response buscar(@PathParam("id") Long id) {
+
         Beneficiario b = dao.buscarPorId(id);
 
         if (b == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+
         return Response.ok(b).build();
     }
+
     @PUT
     @Path("/{id}")
     public Response atualizar(@PathParam("id") Long id, Beneficiario b) {
+
         Beneficiario existente = dao.buscarPorId(id);
 
         if (existente == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+
         try {
+
             b.setId(id);
+
             dao.atualizar(b);
 
             return Response.ok(b).build();
 
         } catch (Exception e) {
+
+            e.printStackTrace();
+
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Erro ao atualizar beneficiário")
+                    .entity(e.getMessage())
                     .build();
         }
     }
+
     @DELETE
     @Path("/{id}")
     public Response deletar(@PathParam("id") Long id) {
+
         Beneficiario existente = dao.buscarPorId(id);
 
         if (existente == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+
         dao.deletar(id);
+
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 }

@@ -28,7 +28,7 @@ public class Consulta {
             throw new IllegalArgumentException("Dentista é obrigatório");
         }
 
-        if (dataHora == null || dataHora.isBefore(LocalDateTime.now())) {
+        if (dataHora == null) {
             throw new IllegalArgumentException("Data/hora inválida");
         }
 
